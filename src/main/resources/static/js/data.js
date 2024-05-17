@@ -52,6 +52,21 @@ document.addEventListener('DOMContentLoaded', async() => {
                                  width: ${ data.width }m`;
     });
 
+    $('shipByIdBtn').addEventListener("click", async(event) => {
+        const id = window.prompt('請輸入id')
+        const response = await fetch(`http://localhost:8081/data/ship/${ id }`);
+        const { state, message, data } = await response.json();
+        console.log(data);
+        if (state) {
+            $('result').innerHTML = `name: ${ data.name }<br>
+                                 type: ${ data.type }<br>
+                                 length: ${ data.length }m<br>
+                                 width: ${ data.width }m`;
+        } else {
+            $('result').innerHTML = message;
+        }
+    });
+
     $('shipsBtn').addEventListener("click", async(event) => {
         const response = await fetch('http://localhost:8081/data/ships');
         const { state, message, data } = await response.json();
