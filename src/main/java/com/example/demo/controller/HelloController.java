@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
 
-@Controller
+@Controller     // SSR
 @RequestMapping("/hello")
 public class HelloController {
 
