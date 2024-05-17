@@ -74,4 +74,20 @@ document.addEventListener('DOMContentLoaded', async() => {
         // 利用 HTML Table 將資料顯示出來
         renderShipTable(data);
     });
+
+    $('bmiBtn').addEventListener("click", async(event) => {
+        const height = window.prompt('請輸入身高');
+        const weight = window.prompt('請輸入體重');
+        const response = await fetch(`http://localhost:8081/data/bmi?h=${ height }&w=${ weight }`);
+        const { state, message, data } = await response.json();
+        console.log(data);
+        if (state) {
+            $('result').innerHTML = `身高: ${ data.height }<br>
+                                 體重: ${ data.weight }<br>
+                                 BMI: ${ data.bmi }<br>
+                                 診斷: ${ data.result }`;
+        } else {
+            $('result').innerHTML = message;
+        }
+    });
 })
