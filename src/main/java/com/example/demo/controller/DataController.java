@@ -3,13 +3,12 @@ package com.example.demo.controller;
 import com.example.demo.model.dto.BmiDto;
 import com.example.demo.model.po.Ship;
 import com.example.demo.model.response.ApiResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @RestController     // CSR
 @RequestMapping("/data")
@@ -31,6 +30,17 @@ public class DataController {
     public ResponseEntity<ApiResponse<Integer>> lotto() {
         Integer data = new Random().nextInt(100);
         ApiResponse<Integer> apiResponse = new ApiResponse<>(true, "success", data);
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    // 取得token
+    @CrossOrigin(origins = "http://localhost:8082", allowCredentials = "true")
+    @GetMapping("/token")
+    public ResponseEntity<ApiResponse<Map<String, String>>> token(HttpSession session) {
+        String token = UUID.randomUUID().toString();
+        String sessionId = session.getId();
+
+        ApiResponse<Map<String, String>> apiResponse = new ApiResponse<>(true, "成功", Map.of("token", token, "sessionId", sessionId));
         return ResponseEntity.ok(apiResponse);
     }
 
